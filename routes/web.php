@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DonationController::class, 'view_all_donations'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/one/donation/{id}', [DonationController::class, 'view_one_donation'])->name('one.donation');
+Route::get('/create/donation', [DonationController::class, 'create_donation'])->name('create.donation');
+Route::post('/setup/donation', [DonationController::class, 'setup_donation'])->name('setup.donation');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
