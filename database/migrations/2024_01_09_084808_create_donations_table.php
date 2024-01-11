@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->enum('status', ['created', 'pending', 'done'])->default('created');
             $table->string('target');
-            $table->string('current_balance');
+            $table->string('donation_title');
+            $table->string('current_balance')->nullable();
             $table->string('donation_text');
             $table->timestamps();
         });

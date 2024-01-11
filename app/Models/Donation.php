@@ -12,6 +12,7 @@ class Donation extends Model
      protected $fillable = [
         'user_id',
         'target',
+        'donation_title',
         'current_balance',
         'donation_text',
         'status',
