@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,12 @@ return new class extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class)->constrained();
+            $table->enum('status', ['created', 'pending', 'done'])->default('created');
+            $table->string('target');
+            $table->string('donation_title');
+            $table->string('current_balance')->nullable();
+            $table->string('donation_text');
             $table->timestamps();
         });
     }
