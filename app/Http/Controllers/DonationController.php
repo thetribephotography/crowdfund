@@ -30,14 +30,28 @@ class DonationController extends Controller
         ], $status_code);
     }
 
+
     public function create_donation()
     {
         return view('create_donation');
     }
+
+
     public function view_all_donations()
     {
-        $donations = Donation::all();
-        return view('dashboard')->with('donations', $donations);
+        try{
+            $donations = Donation::where('status', 'done');
+
+            if($donations->exists()){
+                $donations = $donations->get();
+                return $this->successMessage("All Pending Donations Retrieved", $donations, 200);
+            } else{
+                return $this->successMessage("No Currently Pending Donations", [], 200);
+            }
+        }catch(\Exception $err){
+            Log::error("Error: ". $err->getMessage());
+            return $this->errorMessage("Error", $err->getMessage(), 400); 
+        }
     }
 
     public function view_one_donation($id)
